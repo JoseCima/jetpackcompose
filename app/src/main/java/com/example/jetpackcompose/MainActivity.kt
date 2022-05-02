@@ -4,17 +4,14 @@ import android.content.res.Configuration
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
+import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
@@ -26,17 +23,16 @@ import com.example.jetpackcompose.ui.theme.JetpackcomposeTheme
 
 
 private val mensajitos : List<miMensaje> = listOf(
-    miMensaje("Hola", "Soy José Cima"),
-    miMensaje("Hola 1", "Soy José Cima"),
-    miMensaje("Hola 2", "Soy José Cima"),
-    miMensaje("Hola 3", "Soy José Cima"),
-    miMensaje("Hola 4", "Soy José Cima"),
-    miMensaje("Hola 5", "Soy José Cima"),
-    miMensaje("Hola 6", "Soy José Cima"),
-    miMensaje("Hola 7", "Soy José Cima"),
-    miMensaje("Hola 8", "Soy José Cima"),
-    miMensaje("Hola 9", "Soy José Cima"),
-    miMensaje("Hola 10", "Soy José Cima")
+    miMensaje("Hola 1", "Soy José Cima Soy José CimaSoy José CimaSoy José CimaSoy José CimaSoy José CimaSoy José CimaSoy José CimaSoy José CimaSoy José CimaSoy José CimaSoy José CimaSoy José CimaSoy José CimaSoy José Cima"),
+    miMensaje("Hola 2", "Soy José Cima Soy José CimaSoy José CimaSoy José CimaSoy José CimaSoy José CimaSoy José CimaSoy José CimaSoy José CimaSoy José CimaSoy José CimaSoy José CimaSoy José CimaSoy José CimaSoy José Cima"),
+    miMensaje("Hola 3", "Soy José Cima Soy José CimaSoy José CimaSoy José CimaSoy José CimaSoy José CimaSoy José CimaSoy José CimaSoy José CimaSoy José CimaSoy José CimaSoy José CimaSoy José CimaSoy José CimaSoy José Cima"),
+    miMensaje("Hola 4", "Soy José Cima Soy José CimaSoy José CimaSoy José CimaSoy José CimaSoy José CimaSoy José CimaSoy José CimaSoy José CimaSoy José CimaSoy José CimaSoy José CimaSoy José CimaSoy José CimaSoy José Cima"),
+    miMensaje("Hola 5", "Soy José Cima Soy José CimaSoy José CimaSoy José CimaSoy José CimaSoy José CimaSoy José CimaSoy José CimaSoy José CimaSoy José CimaSoy José CimaSoy José CimaSoy José CimaSoy José CimaSoy José Cima"),
+    miMensaje("Hola 6", "Soy José Cima Soy José CimaSoy José CimaSoy José CimaSoy José CimaSoy José CimaSoy José CimaSoy José CimaSoy José CimaSoy José CimaSoy José CimaSoy José CimaSoy José CimaSoy José CimaSoy José Cima"),
+    miMensaje("Hola 7", "Soy José Cima Soy José CimaSoy José CimaSoy José CimaSoy José CimaSoy José CimaSoy José CimaSoy José CimaSoy José CimaSoy José CimaSoy José CimaSoy José CimaSoy José CimaSoy José CimaSoy José Cima"),
+    miMensaje("Hola 8", "Soy José Cima Soy José CimaSoy José CimaSoy José CimaSoy José CimaSoy José CimaSoy José CimaSoy José CimaSoy José CimaSoy José CimaSoy José CimaSoy José CimaSoy José CimaSoy José CimaSoy José Cima"),
+    miMensaje("Hola 9", "Soy José Cima Soy José CimaSoy José CimaSoy José CimaSoy José CimaSoy José CimaSoy José CimaSoy José CimaSoy José CimaSoy José CimaSoy José CimaSoy José CimaSoy José CimaSoy José CimaSoy José Cima"),
+    miMensaje("Hola 10", "Soy José Cima Soy José CimaSoy José CimaSoy José CimaSoy José CimaSoy José CimaSoy José CimaSoy José CimaSoy José CimaSoy José CimaSoy José CimaSoy José CimaSoy José CimaSoy José CimaSoy José Cima")
 )
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -86,10 +82,14 @@ fun misMensajes(mensajes: List<miMensaje>){
 
 @Composable
 fun misTexts(mensaje: miMensaje){
-    Column(Modifier.padding(start = 8.dp)) {
+
+    var expanded by remember{ mutableStateOf(false)}
+    Column(Modifier.padding(start = 8.dp).clickable{
+       expanded = !expanded
+    } ){
         miTexto(text = mensaje.titulo, MaterialTheme.colors.primary, MaterialTheme.typography.subtitle1)
         Spacer( Modifier.height(16.dp))
-        miTexto(text = mensaje.body, MaterialTheme.colors.onBackground, MaterialTheme.typography.subtitle2)
+        miTexto(text = mensaje.body, MaterialTheme.colors.onBackground, MaterialTheme.typography.subtitle2, lines = if(expanded) Int.MAX_VALUE else 1)
 
 
     }
@@ -97,8 +97,8 @@ fun misTexts(mensaje: miMensaje){
 
 //Señala que es un elemento grafico
 @Composable
-fun miTexto(text: String, color: Color, style: TextStyle){
-    Text(text, color =  color, style = style)
+fun miTexto(text: String, color: Color, style: TextStyle, lines:Int = Int.MAX_VALUE){
+    Text(text, color =  color, style = style, maxLines = lines)
 }
 
 @Preview(showSystemUi = true)
